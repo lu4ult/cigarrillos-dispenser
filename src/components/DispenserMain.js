@@ -1,12 +1,12 @@
 import { iconoArrowDown, iconoArrowUp } from "./icons";
 import { haceCuantoTiempoStr } from "./utils";
 
-const DispenserMain = ({ datos }) => {
+const DispenserMain = ({ datos, setMostrarGrafico }) => {
 
     if (datos.length === 0) {
         return (<p>Vacio</p>);
     }
-    // console.log(datos[0])
+    console.log(datos[0])
 
     return (
         datos.map((data, indice) => {
@@ -21,6 +21,7 @@ const DispenserMain = ({ datos }) => {
                         <div className={`dispenserData__flecha ${data.diferencia > 0 ? 'rojo' : 'verde'}`} >
                             <div>{data.diferencia >= 0 ? iconoArrowUp : iconoArrowDown}</div>
                             <div>{data.diferencia >= 0 ? '+' : ''}{data.diferencia}</div>
+                            {/* <button onClick={() => { setMostrarGrafico(data.mac) }}>gr</button> */}
                             {/* <div>{JSON.stringify(data.historial)}</div> */}
                         </div>
 

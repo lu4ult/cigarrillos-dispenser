@@ -20,6 +20,32 @@ export const getStrDateyyyymmdd = (fecha) => {
     return str;
 }
 
+export const getDateFromAsciiDate = (str) => {
+    const conversion = {
+        'A': 0,
+        'B': 1,
+        'C': 2,
+        'D': 3,
+        'E': 4,
+        'F': 5,
+        'G': 6,
+        'H': 7,
+        'I': 8,
+        'J': 9
+    }
+    let strConDigitos = "";
+    for (let i = 0; i < str.length; i++) {
+        strConDigitos += conversion[str[i]];
+    }
+    console.log(strConDigitos)
+
+    let ano = strConDigitos.substring(0, 4);
+    let mes = strConDigitos.substring(4, 6)
+    let dia = strConDigitos.substring(6, 8)
+
+    return dia + "-" + mes + "-" + ano;
+}
+
 export const haceCuantoTiempoStr = (fecha1, fecha2) => {
     //Si pasaron sólo una fecha hay que comparar con la hora actual.
     if (typeof (fecha1) === 'object' && fecha2 === undefined) {
