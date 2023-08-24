@@ -57,23 +57,17 @@ body #root {
                     grid-area: contador;
                     font-size: calc($fontSize*6);
 
-                    &.verde {
-                        color: green;
-                    }
-
-                    &.rojo {
-                        color: tomato;
-                    }
+                    color: #eee;
                 }
 
                 &__restantes {
                     grid-area: restantes;
                     font-size: calc($fontSize*1.5);
-                    border-top: 1px solid #ccc;
+                    border-top: 1px solid #888;
                     flex-direction: column;
 
                     div {
-                        color: #aaa;
+                        color: #888;
                         padding: 0;
                         //background-color: pink;
                     }
