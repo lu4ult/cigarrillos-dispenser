@@ -5,6 +5,7 @@ import { Cart as ChartJS } from 'chart.js/auto'
 const Grafico = ({ datos }) => {
     const titulos = datos.map(data => data.date.toLocaleString());
     const valores = datos.map(data => data.contadorDeCigarros);
+    const millis = datos.map(data => data.millis);
 
     const data = {
         labels: titulos,
@@ -13,6 +14,13 @@ const Grafico = ({ datos }) => {
             data: valores,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
+            tension: 0.2
+        },
+        {
+            label: 'Encendido',
+            data: millis,
+            fill: false,
+            borderColor: 'rgb(250, 250, 200)',
             tension: 0.2
         },
             // {

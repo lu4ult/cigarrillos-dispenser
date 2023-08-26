@@ -10,8 +10,10 @@ const Main = () => {
     const [estaCargando, setEstaCargando] = useState(true);
     const [datos, setDatos] = useState([]);
     const [historial, setHistorial] = useState([]);
-    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
-    // const [analizar, setAnalizar] = useState(false);
+
+    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
+    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('10:52:1C:01:F6:44');
+
 
     const borrarDatosSimulados = () => {
         const aBorrar = historial.filter(h => h.simulacion)
