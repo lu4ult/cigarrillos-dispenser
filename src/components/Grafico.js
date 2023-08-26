@@ -1,14 +1,19 @@
-import { Bar, Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 import { Cart as ChartJS } from 'chart.js/auto'
-import { getDateFromAsciiDate } from './utils'
+
 
 const Grafico = ({ datos }) => {
+    const titulos = datos.map(data => data.date.toLocaleString());
+    const valores = datos.map(data => data.contadorDeCigarros);
+
     const data = {
-        labels: Object.keys(datos).map(e => getDateFromAsciiDate(e)),
+        labels: titulos,
         datasets: [{
             label: 'Consumos',
-            data: Object.values(datos),
-            backgroundColor: '#ccc'
+            data: valores,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.2
         },
             // {
             //     label: 'Previos',
@@ -19,8 +24,9 @@ const Grafico = ({ datos }) => {
     }
 
     return (
-        <Bar data={data} />
-        // <Line data={data} />
+        <div className='graphContainer'>
+            <Line data={data} />
+        </div >
     )
 }
 
