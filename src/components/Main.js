@@ -11,8 +11,8 @@ const Main = () => {
     const [datos, setDatos] = useState([]);
     const [historial, setHistorial] = useState([]);
 
-    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
-    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('10:52:1C:01:F6:44');
+    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
+    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('10:52:1C:01:F6:44');
 
 
     const borrarDatosSimulados = () => {
