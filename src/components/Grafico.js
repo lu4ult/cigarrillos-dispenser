@@ -2,7 +2,7 @@ import { Line } from 'react-chartjs-2'
 import { Cart as ChartJS } from 'chart.js/auto'
 
 
-const Grafico = ({ datos }) => {
+const Grafico = ({ datos, borrarDatosSimulados }) => {
     const titulos = datos.map(data => data.date.toLocaleString());
     const valores = datos.map(data => data.contadorDeCigarros);
     const millis = datos.map(data => data.millis);
@@ -33,6 +33,7 @@ const Grafico = ({ datos }) => {
 
     return (
         <div className='graphContainer'>
+            <button onClick={borrarDatosSimulados}>Limpiar</button>
             <Line data={data} />
         </div >
     )

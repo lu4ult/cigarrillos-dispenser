@@ -107,7 +107,7 @@ const Main = () => {
 
     return (
         <main>
-            {!estaCargando ? <Grafico datos={historial.filter(h => h.mac === dispositivoAGraficar)} /> : <></>}
+            {!estaCargando ? <Grafico datos={historial.filter(h => h.mac === dispositivoAGraficar)} borrarDatosSimulados={borrarDatosSimulados} /> : <></>}
             {/* <button onClick={simularDatos}>Simular</button>
             <button onClick={borrarDatosSimulados}>Limpiar</button>
             <button onClick={() => { setAnalizar(!analizar) }}>Analizar</button> */}

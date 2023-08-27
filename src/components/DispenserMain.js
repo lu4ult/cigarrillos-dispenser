@@ -14,6 +14,9 @@ const DispenserMain = ({ datos, setDispositivoAGraficar }) => {
                 datos.map((data, indice) => {
                     return (
                         <div className="dispenserData" key={`disp${indice}`}>
+                            <div className="dispenserData__botonera">
+                                <button onClick={() => { setDispositivoAGraficar(data.mac) }}>Graficar</button>
+                            </div>
                             <div className={`dispenserData__contador ${data.diferencia > 0 ? 'rojo' : 'verde'}`}>{data.valores.contadorDeCigarros}</div>
                             <div className="dispenserData__restantes">
                                 <div>{haceCuantoTiempoStr(data.momentoUltimo)}</div>
@@ -22,7 +25,6 @@ const DispenserMain = ({ datos, setDispositivoAGraficar }) => {
                             <div className={`dispenserData__flecha ${data.diferencia > 0 ? 'rojo' : 'verde'}`} >
                                 <div>{data.diferencia >= 0 ? iconoArrowUp : iconoArrowDown}</div>
                                 <div>{data.diferencia >= 0 ? '+' : ''}{data.diferencia}</div>
-                                {/* <button onClick={() => { setDispositivoAGraficar(data.mac) }}>gr</button> */}
 
                                 {/* <div>{JSON.stringify(data.historial)}</div> */}
                             </div>
