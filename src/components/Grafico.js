@@ -32,17 +32,28 @@ const Grafico = ({ historial, borrarDatosSimulados }) => {
                 break;
             }
             case 2: {
+                let fechaInferior;
+                let fechaSuperior;
                 for (let i = 0; i < 48; i++) {
                     // console.log("----");
-                    let fechaInferior = new Date(new Date() - (i + 1) * 60 * 60 * 1000)
-                    let fechaSuperior = new Date(new Date() - i * 60 * 60 * 1000)
+                    // console.log(i);
+                    let ahora = new Date();
+                    fechaInferior = new Date(ahora.setHours(ahora.getHours(), 0, 0, 0));
+                    fechaSuperior = new Date();
+
+                    if (i >= 1) {
+                        fechaSuperior = new Date(fechaInferior - (i - 1) * 60 * 60 * 1000 - 1000);
+                        fechaInferior = new Date(fechaSuperior - 60 * 60 * 1000 + 1000);
+                    }
 
                     // console.log(fechaInferior.toLocaleString())
                     // console.log(fechaSuperior.toLocaleString())
                     let cigarrosDelPeriodo = historial.filter(e => e.date >= fechaInferior && e.date <= fechaSuperior);
 
                     // console.log(cigarrosDelPeriodo.length)
-                    titulos.push(i === 0 ? 'Hace 1 hora' : `${i + 1} horas`);
+                    // titulos.push(i === 0 ? 'Hace 1 hora' : `${i + 1} horas`);
+                    let titulo = fechaInferior.getHours();
+                    titulos.push(titulo);
                     valores.push(cigarrosDelPeriodo.length);
 
                 }
@@ -60,13 +71,8 @@ const Grafico = ({ historial, borrarDatosSimulados }) => {
                 break;
             }
             case 3: {
-
-
                 for (let i = 0; i < 31; i++) {
                     // console.log("----");
-                    // let fechaInferior = new Date(new Date() - (i + 1) * 24 * 60 * 60 * 1000)
-                    // let fechaSuperior = new Date(new Date() - i * 24 * 60 * 60 * 1000)
-
                     let hoy = new Date();
                     let fechaSuperior;
                     let fechaInferior;
@@ -78,22 +84,23 @@ const Grafico = ({ historial, borrarDatosSimulados }) => {
                     }
                     else {
                         fechaSuperior = new Date(hoy.setHours(0, 0, 0, 0));
-                        fechaSuperior = new Date(fechaSuperior - (i - 1) * 24 * 60 * 60 * 1000);
-                        fechaInferior = new Date(fechaSuperior - 24 * 60 * 60 * 1000);
+                        fechaSuperior = new Date(fechaSuperior - (i - 1) * 24 * 60 * 60 * 1000 - 1000);
+                        fechaInferior = new Date(fechaSuperior - 24 * 60 * 60 * 1000 + 1000);
                     }
 
-                    // let fechaInferior = new Date(hoy.setHours(0, 0, 0, 0));
-                    // let fechaSuperior = new Date(fechaInferior - 24 * 60 * 60 * 1000);
-
                     // console.log(i);
-                    // console.log(fechaSuperior.toLocaleString())
-                    // console.log(fechaInferior.toLocaleString())
+                    console.log(fechaSuperior.toLocaleString())
+                    console.log(fechaInferior.toLocaleString())
 
                     let cigarrosDelPeriodo = historial.filter(e => e.date >= fechaInferior && e.date <= fechaSuperior);
                     let cantidadMaximaDelDia = cigarrosDelPeriodo.length === 0 ? 0 : Math.max(...cigarrosDelPeriodo.map(e => e.contadorDeCigarros));
 
                     // console.log(cigarrosDelPeriodo.length)
-                    titulos.push(i === 0 ? 'Hoy' : `Hace ${i + 1} días`);
+                    // titulos.push(i === 0 ? 'Hoy' : `Hace ${i + 1} días`);
+
+                    let dowNombre = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+                    titulos.push(i === 0 ? 'Hoy' : dowNombre[fechaInferior.getDay()] + " " + fechaInferior.getDate());
                     valores.push(cantidadMaximaDelDia);
                 }
                 titulos.reverse();

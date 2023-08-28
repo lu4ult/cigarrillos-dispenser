@@ -100,7 +100,7 @@ const Main = () => {
 
         datosCopia.forEach(equipo => {
             let cigarrosAyer = historial.filter(e => e.mac === equipo['mac'] && e.date >= fechaAyer);
-            let cantidadFumadosAyer = Math.max(...cigarrosAyer.map(e => e.contadorDeCigarros));
+            let cantidadFumadosAyer = cigarrosAyer.length === 0 ? 0 : Math.max(...cigarrosAyer.map(e => e.contadorDeCigarros));
             equipo.diferencia = equipo.valores.contadorDeCigarros - cantidadFumadosAyer;
         });
         // console.log(datosCopia)
