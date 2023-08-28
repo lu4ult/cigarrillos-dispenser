@@ -5,23 +5,26 @@ import DispenserMain from "./DispenserMain";
 import { Loading } from "notiflix";
 import Grafico from "./Grafico";
 
-
 const Main = () => {
     const [estaCargando, setEstaCargando] = useState(true);
     const [datos, setDatos] = useState([]);
     const [historial, setHistorial] = useState([]);
 
+    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('');
     const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
     // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('10:52:1C:01:F6:44');
 
 
     const borrarDatosSimulados = () => {
-        const aBorrar = historial.filter(h => h.simulacion)
-        aBorrar.forEach((e, indice) => {
-            setTimeout(() => {
-                deleteDoc(doc(db, "historial-cigarros", e.id));
-            }, indice * 100);
-        })
+        const aBorrar = historial.filter(h => h.simulacion);
+
+        if (aBorrar.length) {
+            aBorrar.forEach((e, indice) => {
+                setTimeout(() => {
+                    deleteDoc(doc(db, "historial-cigarros", e.id));
+                }, indice * 100);
+            })
+        }
     }
 
     const simularDatos = () => {
@@ -100,14 +103,14 @@ const Main = () => {
             let cantidadFumadosAyer = Math.max(...cigarrosAyer.map(e => e.contadorDeCigarros));
             equipo.diferencia = equipo.valores.contadorDeCigarros - cantidadFumadosAyer;
         });
-        console.log(datosCopia)
+        // console.log(datosCopia)
         setDatos([...datosCopia]);
 
-    }, [historial.length, estaCargando]);
+    }, [historial, estaCargando, dispositivoAGraficar]);
 
     return (
         <main>
-            {!estaCargando ? <Grafico datos={historial.filter(h => h.mac === dispositivoAGraficar)} borrarDatosSimulados={borrarDatosSimulados} /> : <></>}
+            {!estaCargando && dispositivoAGraficar.length ? <Grafico historial={historial.filter(h => h.mac === dispositivoAGraficar)} borrarDatosSimulados={borrarDatosSimulados} /> : <></>}
             {/* <button onClick={simularDatos}>Simular</button>
             <button onClick={borrarDatosSimulados}>Limpiar</button>
             <button onClick={() => { setAnalizar(!analizar) }}>Analizar</button> */}
