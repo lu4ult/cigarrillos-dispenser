@@ -17,13 +17,12 @@ const Main = () => {
 
     const borrarDatosSimulados = () => {
         const aBorrar = historial.filter(h => h.simulacion);
-
         if (aBorrar.length) {
             aBorrar.forEach((e, indice) => {
                 setTimeout(() => {
                     deleteDoc(doc(db, "historial-cigarros", e.id));
                 }, indice * 100);
-            })
+            });
         }
     }
 
