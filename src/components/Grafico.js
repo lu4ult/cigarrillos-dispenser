@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { arrayRange, fechaFormatoReducido } from './utils';
 
 
-const Grafico = ({ historial, borrarDatosSimulados }) => {
-    const [tipoDeGrafico, setTipoDeGrafico] = useState(2);
+const Grafico = ({ historial, borrarDatosSimulados, setDispositivoAGraficar }) => {
+    const [tipoDeGrafico, setTipoDeGrafico] = useState(1);
 
     const [datosParaGrafico, setDatosParaGraficos] = useState({});
 
@@ -140,14 +140,20 @@ const Grafico = ({ historial, borrarDatosSimulados }) => {
                 {/* <Bar data={datosParaGrafico} /> */}
 
             </div>
-            <div className='botonera'>
-                <button disabled={tipoDeGrafico === 1} className={tipoDeGrafico === 1 ? 'active' : null} onClick={() => { handleBotonClick(1) }}>Todos</button>
-                <button disabled={tipoDeGrafico === 2} className={tipoDeGrafico === 2 ? 'active' : null} onClick={() => { handleBotonClick(2) }}>Diario</button>
-                <button disabled={tipoDeGrafico === 3} className={tipoDeGrafico === 3 ? 'active' : null} onClick={() => { handleBotonClick(3) }}>Mensual</button>
+            {
+                JSON.stringify(datosParaGrafico) === '{}'
+                    ? <></>
+                    : <div className='botonera'>
 
-                <button disabled={false} onClick={borrarDatosSimulados}>Limpiar</button>
+                        <button disabled={tipoDeGrafico === 1} className={tipoDeGrafico === 1 ? 'active' : null} onClick={() => { handleBotonClick(1) }}>Todos</button>
+                        <button disabled={tipoDeGrafico === 2} className={tipoDeGrafico === 2 ? 'active' : null} onClick={() => { handleBotonClick(2) }}>Diario</button>
+                        <button disabled={tipoDeGrafico === 3} className={tipoDeGrafico === 3 ? 'active' : null} onClick={() => { handleBotonClick(3) }}>Mensual</button>
 
-            </div>
+                        <button disabled={false} onClick={borrarDatosSimulados}>Limpiar</button>
+                        <button onClick={() => { setDispositivoAGraficar('') }}>Ocultar</button>
+
+                    </div>
+            }
         </div >
     )
 }

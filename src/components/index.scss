@@ -1,4 +1,4 @@
-$fontSize: calc(1rem + 0.7vw);
+$fontSize: calc(0.8rem + 0.7vw);
 
 * {
     margin: 0;
@@ -101,10 +101,11 @@ body #root {
                 display: grid;
 
                 grid-template-columns: 1.618034fr 1fr;
-                grid-template-rows: 10% 60% 30%;
+                grid-template-rows: 15% 10% 45% 30%;
 
                 grid-template-areas:
                     "botonera flecha"
+                    "nombre flecha"
                     "contador flecha"
                     "restantes restantes";
 
@@ -118,21 +119,29 @@ body #root {
 
                 &__botonera {
                     grid-area: botonera;
-                    //background-color: red;
 
                     button {
+                        height: 100%;
+                        aspect-ratio: 1;
                         background-color: #222;
-                        color: white;
+                        // background-color: #222;
+                        // background-color: white;
+
+                        svg {
+                            fill: white;
+                        }
 
                         // width: 20%;
                     }
                 }
 
+                &__nombre {
+                    color: white;
+                }
+
                 &__contador {
                     grid-area: contador;
                     font-size: calc($fontSize*6);
-                    border-right: 1px solid #888;
-
                     color: #eee;
                 }
 
@@ -154,6 +163,13 @@ body #root {
                     flex-direction: column;
                     grid-area: flecha;
                     font-size: calc($fontSize*2);
+                    border-left: 1px solid #888;
+
+                    .iconoContainer {
+                        // background-color: red;
+                        width: 50%;
+                        aspect-ratio: 1;
+                    }
 
                     &.rojo {
                         div {
@@ -179,5 +195,101 @@ body #root {
             }
         }
 
+        .modalConfiguracionContainer {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .modalConfiguracion {
+                border: 5px solid black;
+                border-radius: 15px;
+                padding: 1rem;
+                background-color: #eee;
+                width: 50%;
+                //min-height: 50vh;
+
+                display: flex;
+                flex-direction: column;
+                position: relative;
+
+                .titulo {
+                    //background-color: black;
+                    text-align: center;
+                    font-size: 1rem;
+                    margin: 1rem;
+                }
+
+                label {
+                    border-bottom: 2px solid #aaa;
+                    margin: 0.5rem auto;
+                    width: 80%;
+                    display: flex;
+                    justify-content: space-between;
+
+                    input {
+                        background-color: inherit;
+                        outline: none;
+                        // outline: 1px solid #aaa;
+                        border: none;
+                        text-align: center;
+
+                        &:focus {
+                            background-color: lightblue;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: lightblue;
+                    }
+                }
+
+                .cerrar {
+                    background-color: black;
+                    color: white;
+                    width: 2rem;
+                    height: 2rem;
+                    padding: 0;
+                    margin: 0;
+                    position: absolute;
+                    border: 2px solid black;
+                    outline: none;
+                    border-bottom-left-radius: 10px;
+                    top: 0;
+                    right: 0;
+
+                    svg {
+                        fill: white;
+                    }
+
+                    &:hover {
+                        border-radius: 10px;
+                        background-color: white;
+
+                        svg {
+                            fill: black;
+                        }
+                    }
+                }
+            }
+
+            .guardar {
+                padding: 0.5rem;
+                margin: 0.5rem;
+                min-width: 150px;
+                border: 2px solid black;
+                border-radius: 5px;
+                outline: none;
+                color: #ccc;
+
+                background-color: green;
+            }
+        }
     }
 }

@@ -10,9 +10,7 @@ const Main = () => {
     const [datos, setDatos] = useState([]);
     const [historial, setHistorial] = useState([]);
 
-    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('');
-    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('E8:9F:6D:94:27:81');
-    // const [dispositivoAGraficar, setDispositivoAGraficar] = useState('10:52:1C:01:F6:44');
+    const [dispositivoAGraficar, setDispositivoAGraficar] = useState('');
 
 
     const borrarDatosSimulados = () => {
@@ -43,6 +41,15 @@ const Main = () => {
 
 
     useEffect(() => {
+
+        // let fechaHistorialEnLocal = new Date(JSON.parse(localStorage.getItem('cig-historial-date')));
+        // let diferenciaEnMinutos = parseInt((new Date() - fechaHistorialEnLocal) / 60000);
+
+        // if (diferenciaEnMinutos < 60) {
+        //     let historialLocal = JSON.parse(localStorage.getItem('cig-historial'));
+        //     historialLocal.forEach(e => e.date = new Date(e.date))
+        //     setHistorial(JSON.parse(localStorage.getItem('cig-historial')));
+        // }
         const qh = query(collection(db, "historial-cigarros"));
         onSnapshot(qh, (querySnapshot) => {
             let historia = [];
@@ -52,6 +59,8 @@ const Main = () => {
 
                 historia.push({ ...doc.data(), 'id': doc.id, 'mac': mac, 'date': new Date((parseInt(timestamp) * 1000) + (3 * 60 * 60 * 1000)) });
             });
+            localStorage.setItem('cig-historial', JSON.stringify(historia));
+            localStorage.setItem('cig-historial-date', JSON.stringify(new Date()));
             setHistorial(historia);
         });
 
@@ -70,6 +79,7 @@ const Main = () => {
                 setEstaCargando(false);
             }
 
+            setDispositivoAGraficar(_dispositivos[0]['mac']);
             setDatos([..._dispositivos]);
         });
     }, []);
@@ -107,9 +117,10 @@ const Main = () => {
 
     }, [historial, estaCargando, dispositivoAGraficar]);
 
+
     return (
         <main>
-            {!estaCargando && dispositivoAGraficar.length ? <Grafico historial={historial.filter(h => h.mac === dispositivoAGraficar)} borrarDatosSimulados={borrarDatosSimulados} /> : <></>}
+            {!estaCargando && dispositivoAGraficar.length ? <Grafico historial={historial.filter(h => h.mac === dispositivoAGraficar)} borrarDatosSimulados={borrarDatosSimulados} setDispositivoAGraficar={setDispositivoAGraficar} /> : <></>}
             {/* <button onClick={simularDatos}>Simular</button>
             <button onClick={borrarDatosSimulados}>Limpiar</button>
             <button onClick={() => { setAnalizar(!analizar) }}>Analizar</button> */}
