@@ -35,3 +35,14 @@ export const fechaFormatoReducido = (fecha) => {
     str += fecha.toLocaleTimeString();
     return str;
 }
+
+export const fechaParaInput = (_fecha) => {
+    const fecha = new Date(_fecha || new Date());
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const ano = fecha.getFullYear();
+    const hora = fecha.getHours();
+    const min = fecha.getMinutes();
+
+    return `${ano}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}T${hora < 10 ? '0' : ''}${hora}:${min < 10 ? '0' : ''}${min}`;
+}

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import ModalConfiguracion from "./ModalConfiguracion";
-import { iconoArrowDown, iconoArrowUp, iconoEditar, iconoGrafico } from "./icons";
+import { iconoArrowDown, iconoArrowUp, iconoEditar, iconoGrafico, iconoPlus } from "./icons";
 import { haceCuantoTiempoStr } from "./utils";
+import ModalAgregarManualmente from "./ModalAgregarManualmente";
 
 const DispenserMain = ({ datos, setDispositivoAGraficar }) => {
     const [editarEquipo, setEditarEquipo] = useState({});
+    const [agregarManualmente, setAgregarManualmente] = useState({});
     if (datos.length === 0) {
         return (<p>Vacio</p>);
     }
@@ -18,6 +20,7 @@ const DispenserMain = ({ datos, setDispositivoAGraficar }) => {
                             <div className="dispenserData__botonera">
                                 <button onClick={() => { setDispositivoAGraficar(data.mac) }}>{iconoGrafico}</button>
                                 <button onClick={() => { setEditarEquipo(data) }}>{iconoEditar}</button>
+                                <button onClick={() => { setAgregarManualmente(data) }}>{iconoPlus}</button>
                             </div>
                             <div className="dispenserData__nombre">
                                 {data.usuario || ''}
@@ -39,6 +42,11 @@ const DispenserMain = ({ datos, setDispositivoAGraficar }) => {
                 JSON.stringify(editarEquipo) === '{}'
                     ? <></>
                     : <ModalConfiguracion equipo={editarEquipo} setEditarEquipo={setEditarEquipo} />
+            }
+            {
+                JSON.stringify(agregarManualmente) === '{}'
+                    ? <></>
+                    : <ModalAgregarManualmente agregarManualmente={agregarManualmente} setAgregarManualmente={setAgregarManualmente} />
             }
         </div >
     )
