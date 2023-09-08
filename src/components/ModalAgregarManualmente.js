@@ -3,14 +3,17 @@ import Input from "./Input";
 import { fechaParaInput } from "./utils";
 import { iconoClose } from "./icons";
 import { updateDatosActualesFirestore, updateHistorialFirestore } from "./Firestore";
+import MqttComponente, { publicarMqtt } from "./MqttComponente";
 
 const ModalAgregarManualmente = ({ agregarManualmente, setAgregarManualmente }) => {
+    const [clienteMqtt, setClienteMqtt] = useState(null);
+
     const [valores, setValores] = useState({
         fecha: fechaParaInput(),
-        contadorDeCigarros: 1 + parseInt(agregarManualmente['valores']['contadorDeCigarros'])
+        contadorDeCigarros: parseInt(agregarManualmente['valores']['contadorDeCigarros']) + 1,
+        cigarrillosRestantes: parseInt(agregarManualmente['valores']['cigarrillosRestantes']) - 1
     });
 
-    console.log(agregarManualmente)
     const arrayDeKeys = [
         { 'titulo': 'Fecha', 'key': 'fecha', 'tipo': 'datetime-local' },
         { 'titulo': 'Cantidad Total', 'key': 'contadorDeCigarros', 'tipo': 'number' },
@@ -36,19 +39,29 @@ const ModalAgregarManualmente = ({ agregarManualmente, setAgregarManualmente }) 
     }
 
     const handleGuardar = () => {
+        console.log(valores);
         const timestamp = new Date(valores['fecha']).getTime() / 1000 - 10800;
         let id = timestamp + "-" + agregarManualmente['mac'];
         let cantidad = valores['contadorDeCigarros'];
+        let restantes = valores['cigarrillosRestantes'];
+        let mac = agregarManualmente['mac'];
 
-        const objeto = {
+        const objetoParaHistoria = {
             contadorDeCigarros: cantidad,
             mac: agregarManualmente['mac'],
-            // simulacion: true
         };
 
-        updateHistorialFirestore(id, objeto);
-        updateDatosActualesFirestore(agregarManualmente['mac'], { contadorDeCigarros: cantidad.toString(), timestampUltimoCigarro: timestamp.toString() })
+        updateHistorialFirestore(id, objetoParaHistoria);
+        updateDatosActualesFirestore(agregarManualmente['mac'], { contadorDeCigarros: cantidad.toString(), timestampUltimoCigarro: timestamp.toString(), cigarrillosRestantes: restantes.toString() })
         setAgregarManualmente({});
+
+        const objetoParaMqtt = {
+            cant: cantidad,
+            rest: restantes,
+            ts: timestamp,
+        }
+
+        publicarMqtt(clienteMqtt, mac, JSON.stringify(objetoParaMqtt))
     }
 
 
@@ -71,6 +84,7 @@ const ModalAgregarManualmente = ({ agregarManualmente, setAgregarManualmente }) 
             </div>
 
             <button className="guardar" onClick={handleGuardar}>GUARDAR</button>
+            <MqttComponente clienteMqtt={clienteMqtt} setClienteMqtt={setClienteMqtt} />
         </div>
     );
 }
