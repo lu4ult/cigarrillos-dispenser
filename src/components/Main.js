@@ -64,7 +64,7 @@ const Main = () => {
             setHistorial(historia);
         });
 
-        const q = query(collection(db, 'cigarrillos'), where("usuario", "==", "lautaro"));
+        const q = query(collection(db, 'cigarrillos')); //, where("usuario", "==", "lautaro")
         onSnapshot(q, (querySnapshot) => {
             const _dispositivos = [];
             querySnapshot.forEach((doc) => {
